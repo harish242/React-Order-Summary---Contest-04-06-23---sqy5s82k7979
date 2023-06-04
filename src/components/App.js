@@ -3,17 +3,23 @@ import "../styles/App.css";
 import picture from "../assets/illustration-hero.png";
 
 const options = [
-  { key: 0, plan: "Annual Plan", price: "$59.99/year" },
-  { key: 1, plan: "6-Month Plan", price: "$34.99/6mo" },
-  { key: 2, plan: "3-Month Plan", price: "$16.99/3mo" },
-  { key: 3, plan: "1-Month Plan", price: "$5.99/1mo" },
+  { key: 0, plan: "Annual Plan", price: "59.99/year" },
+  { key: 1, plan: "6-Month Plan", price: "34.99/6mo" },
+  { key: 2, plan: "3-Month Plan", price: "16.99/3mo" },
+  { key: 3, plan: "1-Month Plan", price: "5.99/1mo" },
 ];
 
 const App = () => {
   const [currentPlan, setCurrentPlan] = useState();
 
-  const changeHandler = (e) => {
+   const changeHandler = (e) => {
+    const planIndex = e.target.value;
+    setCurrentPlan(options[planIndex]);
+  };
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+//     console.log("Submitting order for:", currentPlan.plan);
   };
 
   return (
@@ -33,7 +39,8 @@ const App = () => {
             any device anywhere you like.
           </p>
         </div>
-        <form>
+        <form onSubmit={submitHandler}>
+
           <div className="select-container">
             <div className="music-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48">
@@ -48,8 +55,8 @@ const App = () => {
               </svg>
             </div>
             <div className="plan">
-              <h4 id="plan-title"></h4>
-              <p id="plan-price"></p>
+              <h4 id="plan-title">{currentPlan ? currentPlan.plan : ""}</h4>
+              <p id="plan-price">${currentPlan ? currentPlan.price : ""}</p>
             </div>
             <select onChange={changeHandler} className="select" id="select">
               <option disabled selected>
@@ -57,8 +64,8 @@ const App = () => {
               </option>
               {options.map((option) => (
                 <option key={option.key} value={option.key}>
-                 
-                </option>
+  {option.plan} - {option.price}
+</option>
               ))}
             </select>
           </div>
